@@ -208,7 +208,14 @@ This will run a plan and pass the changeset to be executed by terraform. Apply s
 
 If we want to automatically approve an apply we can provide the auto approve flag eg. `terraform apply --auto-approve`
 
-### Terraform lock files
+#### Terraform Destroy
+
+`teraform destroy`
+This will destroy resources. 
+
+You can also use the auto approve flag to skip the approve prompt. eg. `terraform apply --auto-approve`
+
+#### Terraform lock files 
 
 `.terraform.lock.hcl` contains the locked versioning for the providers or modules that should be used with this project. 
 
@@ -405,6 +412,287 @@ terraform output
 ```
 terraform output random_bucket_name
 ```
+
+
+
+
+
+
+### Create S3 Bucket Using Terraform.
+- Create a new ticket in Git Hub
+- Open the file called 'main.tf'
+- The current code is shown below
+
+```
+PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
+AWS_ACCESS_KEY_ID='AKIAIOSFODNN7EXAMPLE'
+AWS_SECRET_ACCESS_KEY='wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
+AWS_DEFAULT_REGION='us-east-1'
+```
+
+- Copy the code and paste it below the original code and edit it usinbg the actual key values. Remeember you must keep the old coce with the wrong values because you should never commit your access and secret access keys into Github or Gitpod or anywhere else. **They are private** 
+
+- **Initialize terraform**
+
+- Select 'main.tf'
+- Select the Terraform tab in the terminal
+- Run  
+
+```
+Terraform init
+```
+in the terminal. 
+- Run 
+```
+terraform apply --auto-approve
+```
+- A bucket has been created called "lSti4APBkH4sDcrC". This bucket name is not in line with the requirment for S3 bucket
+
+
+- Go to google browser and search for 'Terraform registry'
+- In [Terraform registry](https://registry.terraform.io/) select browse providers> aws> Documentation
+- Scroll to S3 simple storage and select 'aws_s3_bucket' from under resources
+- Scroll down to 'Example Usage'
+- Scroll down to 'Private Bucket With Tags' copy the code
+```
+resource "aws_s3_bucket" "example" {
+  bucket = "my-tf-test-bucket"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+```
+
+
+- Paste it in 'main.tf' after the third block of code called 'resource' before 'Output' 
+- Remove the tag and edit it with 
+
+
+- Remove the tag and edit it with 
+
+```
+resource "aws_s3_bucket" "example" {
+  bucket = "random_string.bucket_name.result"
+}
+```
+- Go to the terminal and run 
+```
+terraform plan
+```
+- A bucket has been created called ''. This bucket does nbot meet the requirements for mcreating an S3 bucket. 
+- **Add AWS providers**
+
+- In [Terraform registry](https://registry.terraform.io/) select browse providers> aws> [Use provider](https://registry.terraform.io/providers/hashicorp/aws/latest)
+- Copy the code
+```
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.19.0"
+    }
+  }
+}
+```
+
+- Remove the first two lines of the new block of code and the last two curly brace.  It will look like the code below. Cut it and paste it after the curly brace that comes at the end if the version (In the first block of code). This is because you can only have a single terraform block
+
+```
+
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.19.0"
+    }
+  
+```
+**note ran terraform plan --then there was an error. so I ran terraform init** pls delete this sentence
+- Run 
+```terraform init```
+- Run again 
+```Terraform plan```
+- Select the terraform tab
+- Run Terraform plan you will get an error
+- Run 
+```
+e
+nv | grep AWS
+```
+
+
+- Select AWS tab
+- Run env | grep AWS
+
+- **You will notice that the access key and secret access key are not the same**
+- The keys for terraform has not been edited to the current one. To do this 
+
+
+
+- In [Terraform registry](https://registry.terraform.io/) select browse providers> aws> [Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+
+- Scroll down to [Provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#provider-configuration)
+- Copy the code below and paste it below the first block of code starting with the word'Terraform'
+
+```
+provider "aws" {
+  region     = "us-west-2"
+  access_key = "my-access-key"
+  secret_key = "my-secret-key"
+}
+```
+- Edit the code with the correct keys see example below
+```
+provider "aws" {
+  access_key = "********************"
+  secret_key = "****************************************"
+  region     = "us-east-1"
+}
+
+```
+
+- Again run
+```
+terraform plan
+```
+Now remove the access key and secret access key to avoid commiting them cos they are private. 
+
+
+- Edit the code below with the correct details and run it in the terminal of the same terraform tab
+
+```
+export AWS_ACCESS_KEY_ID='AKIAIOSFODNN7EXAMPLE'
+export AWS_SECRET_ACCESS_KEY='wJalrXUtnFEMI/export K7MDENG/bPxRfiCYEXAMPLEKEY'
+AWS_DEFAULT_REGION='us-east-1'
+```
+- Run 
+```
+terraform plan
+```
+- A bucket is created but it is not in line with the requirements for S3 bucket in AWS. 
+- Run Terraform apply
+AWS_DEFAULT_REGION='us-east-1'
+```
+- Run 
+```
+terraform plan
+```
+- A bucket is created but it is no t in line with the requirements for S3 bucket in AWS. 
+- Run Terraform apply
+- But it fails. so fix ramdom string
+```
+- Run 
+```
+terraform plan
+```
+- A bucket is created but it is no t in line with the require-ments for S3 bucket in AWS. 
+- Run Terraform apply
+- But it fails. so fix ramdom string
+- Random mstring is in the 4th block of the code in 'main.tf'
+- Below is an example of the edited one
+```
+resource "random_string" "bucket_name" {
+  lower = true
+  upper = false
+  length = 32 
+  special = true 
+  override_special = "%*@"
+```
+
+- Also create a proper and unique bucket name. I choose 'my-terraform-bucket-88afor'
+- Replace the bucket names in code block 5 and 6 with your unique bucket name. 
+
+
+Run 
+```
+terraform plan
+```
+- Run
+```
+Terraform apply
+```
+
+enter 'yes'
+
+- **To destroy the bucket**
+
+- Run 
+```terraform destroy
+```
+- Type 'yes'
+
+
+
+- The initial code is shown below
+```
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
+
+provider "random" {
+  # Configuration options
+}
+
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = false 
+}
+
+output "random_bucket_name" {
+  value = random_string.bucket_name.result
+}
+
+```
+
+- ** The final code is **
+```
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.19.0"
+    }
+  }
+}
+
+provider "aws" {
+}
+
+provider "random" {
+  # Configuration options
+}
+
+# https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
+resource "random_string" "bucket_name" {
+  lower = true
+  upper = false
+  length = 32 
+  special = true 
+  override_special = "%*@"
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
+resource "aws_s3_bucket" "example" {
+  # Bucket naming rules
+  # https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html?icmpid=docs_amazons3_console
+  bucket = "my-terraform-bucket-88afor"
+}
+
+output "random_bucket_name" {
+  value = "my-terraform-bucket-88afor"
+}
+
+```
+- Before you commit, cheak all your files and make sure you have not left your access key or secret key any where in your files. 
 
 ## Reference
 
