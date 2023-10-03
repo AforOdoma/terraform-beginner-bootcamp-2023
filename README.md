@@ -238,9 +238,13 @@ If you loose this file, you lose knowing the state of your infrastructure.
 `.terraform` directory contains binaries of 
 terraform providers.
 
+## Issues with Creating an S3 bucket
+I kept getting errors while trying to create an S3 bucket so I edited my bucket name to use a dash instead of an underscore. I used an article on [Troubleshooting: Error After Creating S3 Bucket with Terraform](https://saturncloud.io/blog/troubleshooting-error-after-creating-s3-bucket-with-terraform). Scrolled to 
+[Step 1: Verify the S3 Bucket Name](https://saturncloud.io/blog/troubleshooting-error-after-creating-s3-bucket-with-terraform/#step-1-verify-the-s3-bucket-name) to compare with a version of a correct code.
+
 ## Issues with Terraform Cloud Login and Gitpod workspace
 
-I was able to successfully run the entire project twice. My laptop froze when I was almost done. I had to re- run everything. While I had issues trying to run 'terrafor login' in the first instance, the second instance was a smooth sail. 
+I was able to successfully run the entire project twice. My laptop froze when I was almost done. I had to re- run everything. While I had issues trying to run 'terrafor login' in the first instance, the second instance was a smooth sail after I generated the token. 
 
 In the first instance, when attempting to run 'terraform login' it will lunch in bash a wiswing view to generate a token.  However, it does not as expected in Gitpod VSCode in the browser. 
 The work around is to mannually generate token 
@@ -259,7 +263,8 @@ eg
 ```sh
 touch /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
-Provide the following code (replace your token in the file):
+While the touch command creates a new file, the open command opens it up for editing.
+The new file is empty. The code below is edited and pasted in it. Hence, provide the following code (replace your token in the file):
 
 ```json
 {
@@ -270,8 +275,9 @@ Provide the following code (replace your token in the file):
   }
 }
 ```
-
+See [source](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/?rdt=47689)of code. 
 Then open the file
+Before I resarted the process I had to delete the resources created in terraform using this [guide](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-destroy)
 ### Writing a module with Terraforms
 
 **Steps**
@@ -726,13 +732,28 @@ output "random_bucket_name" {
 }
 
 ```
-- Before you commit, cheak all your files and make sure you have not left your access key or secret key any where in your files. 
+- Before you commit, cheak all your files and make sure you have not left your access key or secret key any where in your files.
+- **Former way of configuring terraform**
+  see (guide)[https://developer.hashicorp.com/terraform/language/settings/backends/remote] (under basic confifuration copy and edit code) and this [page](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate#configure-terraform-cloud-integration) under Configure Terraform Cloud integration copy and edit code . 
+- fff
+- ff
 
 ## Reference
 
 - [Semantic Versioning 2.0.0](https://semver.org/)
 - [oh-my-bash](https://github.com/ohmybash/oh-my-bash)
 - [What version of Linux am I running?](https://opensource.com/article/18/6/linux-version)
+- [Destroy resources and workspaces](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-destroy)
+- [can anyone please show me show me how credentials.tfrc.json content looks like with token ?](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/?rdt=47689)
+- [remote](https://developer.hashicorp.com/terraform/language/settings/backends/remote)
+- (Migrate state to Terraform Cloud)[https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate]
+- [Configure Terraform Cloud integration](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate#configure-terraform-cloud-integration)
+- [Terraform Registry](https://registry.terraform.io/)
+- [Create a workspace](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-workspace-create)
+- [Step 1: Verify the S3 Bucket Name](https://saturncloud.io/blog/troubleshooting-error-after-creating-s3-bucket-with-terraform/#step-1-verify-the-s3-bucket-name)
+- [Troubleshooting: Error After Creating S3 Bucket with Terraform](https://saturncloud.io/blog/troubleshooting-error-after-creating-s3-bucket-with-terraform)
+- [Bucket naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html?icmpid=docs_amazons3_console)
+- [AWS::S3::Bucket](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html)
 
 
 
