@@ -275,9 +275,14 @@ The new file is empty. The code below is edited and pasted in it. Hence, provide
   }
 }
 ```
+
+
 See [source](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/?rdt=47689)of code. 
 Then open the file
 Before I resarted the process I had to delete the resources created in terraform using this [guide](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-destroy)
+
+We have automated this workaround with the  bash script [./bin/generate_tfrc_credentials](./bin/generate_tfrc_credentials)
+
 ### Writing a module with Terraforms
 
 **Steps**
@@ -735,9 +740,6 @@ output "random_bucket_name" {
 - Before you commit, cheak all your files and make sure you have not left your access key or secret key any where in your files.
 - **Former way of configuring terraform**
   see (guide)[https://developer.hashicorp.com/terraform/language/settings/backends/remote] (under basic confifuration copy and edit code) and this [page](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate#configure-terraform-cloud-integration) under Configure Terraform Cloud integration copy and edit code . 
-- fff
-- ff
-
 ## Reference
 
 - [Semantic Versioning 2.0.0](https://semver.org/)
@@ -757,3 +759,38 @@ output "random_bucket_name" {
 
 
 
+
+- fff
+- go to chat gpt and ask chat gpt to write a bash script that will generate out the json file credentials.tfrc.json with the jason structure  below and it should use the env var TERRAFORM_CLOUD_TOKEN                                                                   {
+  
+```  
+"credentials": {
+    "app.terraform.io": {
+      "token": "YOUR-TERRAFORM-CLOUD-TOKEN"
+    }
+  }
+}
+```
+I was not comfortable with the code that was generated so i used the provided one below
+
+```
+
+# Check if the TERRAFORM_CLOUD_TOKEN environment variable is set
+if [ -z "$TERRAFORM_CLOUD_TOKEN" ]; then
+  echo "Error: TERRAFORM_CLOUD_TOKEN environment variable is not set."
+  exit 1
+fi
+
+# Generate credentials.tfrc.json with the token 
+cat > /home/gitpod/.terraform.d/credentials.tfrc.json << EOF 
+{
+  "credentials": {
+    "app.terraform.io": {
+      "token": "'"$TERRAFORM_CLOUD_TOKEN"'"
+    }
+  }
+}
+EOF
+
+echo "credentials.tfrc.json has been generated."
+```
