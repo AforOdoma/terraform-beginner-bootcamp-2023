@@ -794,3 +794,14 @@ EOF
 
 echo "credentials.tfrc.json has been generated."
 ```
+
+## Note
+- **To delete tag 0.2.0 run** 
+```
+git tag -d 0.2.0
+```
+**Then run**
+```
+git push --delete origin 0.2.0
+```
+then go to GitHub and confirm it.
