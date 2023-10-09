@@ -1,32 +1,32 @@
 # Terraform Beginner Bootcamp 2023 -week 0
-- [Terraform Beginner Bootcamp 2023](#terraform-beginner-bootcamp-2023)
-  * [Semantic Versioning: image:](#semantic-versioning--image-)
-  * [Install the Terraform Cli](#install-the-terraform-cli)
-    + [Considerations with the Terraform CLI changes](#considerations-with-the-terraform-cli-changes)
-  * [Considerations for Linux Distribution](#considerations-for-linux-distribution)
-    + [Refactoring into Bash Scripts](#refactoring-into-bash-scripts)
-      - [Shebang Considerations](#shebang-considerations)
-      - [Execution Considerations](#execution-considerations)
-      - [Linux Permissions Considerations](#linux-permissions-considerations)
-    + [Github Lifecycle (Before, init, command)](#github-lifecycle--before--init--command-)
-    + [Working with Env Vars](#working-with-env-vars)
-      - [Setting and Unsetting Env Vars](#setting-and-unsetting-env-vars)
-      - [Printing Env Var](#printing-env-var)
-      - [Scoping of Env Vars](#scoping-of-env-vars)
-      - [Persisting Env Vars in Gitpod](#persisting-env-vars-in-gitpod)
-    + [AWS CLI Installation](#aws-cli-installation)
-  * [Terraform Basics](#terraform-basics)
-    + [Terraform Registry](#terraform-registry)
-    + [Terraform Console](#terraform-console)
-      - [Terraform init](#terraform-init)
-      - [Terraform Plan](#terraform-plan)
-      - [Terraform Apply](#terraform-apply)
-      - [Terraform Destroy](#terraform-destroy)
-      - [Terraform lock files](#terraform-lock-files)
-    + [Terraform State Files](#terraform-state-files)
-    + [Terraform Directory](#terraform-directory)
-  * [Issues with Creating an S3 bucket](#issues-with-creating-an-s3-bucket)
-  * [Issues with Terraform Cloud Login and Gitpod workspace](#issues-with-terraform-cloud-login-and-gitpod-workspace)
+
+- [Semantic Versioning: image:](#semantic-versioning-image)
+- [Install the Terraform Cli](#install-the-terraform-cli)
+  * [Considerations with the Terraform CLI changes](#considerations-with-the-terraform-cli-changes)
+- [Considerations for Linux Distribution](#considerations-for-linux-distribution)
+  * [Refactoring into Bash Scripts](#refactoring-into-bash-scripts)
+    + [Shebang Considerations](#shebang-considerations)
+    + [Execution Considerations](#execution-considerations)
+    + [Linux Permissions Considerations](#linux-permissions-considerations)
+- [Gitpod Lifecycle (Before, init, command)](#gitpod-lifecycle-before-init-command)
+- [Working with Env Vars](#working-with-env-vars)
+    + [Setting and Unsetting Env Vars](#setting-and-unsetting-env-vars)
+    + [Printing Env Var](#printing-env-var)
+    + [Scoping of Env Vars](#scoping-of-env-vars)
+    + [Persisting Env Vars in Gitpod](#persisting-env-vars-in-gitpod)
+  * [AWS CLI Installation](#aws-cli-installation)
+- [Terraform Basics](#terraform-basics)
+  * [Terraform Registry](#terraform-registry)
+  * [Terraform Console](#terraform-console)
+    + [Terraform init](#terraform-init)
+    + [Terraform Plan](#terraform-plan)
+    + [Terraform Apply](#terraform-apply)
+    + [Terraform Destroy](#terraform-destroy)
+    + [Terraform lock files](#terraform-lock-files)
+  * [Terraform State Files](#terraform-state-files)
+  * [Terraform Directory](#terraform-directory)
+- [Issues with Creating an S3 bucket](#issues-with-creating-an-s3-bucket)
+- [Issues with Terraform Cloud Login and Gitpod workspace](#issues-with-terraform-cloud-login-and-gitpod-workspace)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -120,13 +120,13 @@ chmod 744 ./bin/install_terraform_cli
 
 [chmod](https://en.wikipedia.org/wiki/Chmod)
 
-### Github Lifecycle (Before, init, command)
+## Gitpod Lifecycle (Before, init, command)
 
 We need to be carefull when using the init because it will not rerun if we restart an existing workspace. 
 
 [Gitpod](https://www.gitpod.io/docs/configure/workspaces/tasks)
 
-### Working with Env Vars
+## Working with Env Vars
 
 We can list oput all Environmental Variables (Env Vars) using the 'env' command.
 
