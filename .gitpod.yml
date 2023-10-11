@@ -11,6 +11,7 @@ tasks:
     before: |
       source ./bin/set_tf_alias
       source ./bin/install_aws_cli
+      cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
 vscode:
   extensions:
     - amazonwebservices.aws-toolkit-vscode
